@@ -1,10 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package dominatorchain;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,10 +6,6 @@ import java.util.LinkedList;
 import java.util.Set;
 import java.util.TreeSet;
 
-/**
- *
- * @author soundaryaramesh
- */
 public class Graph {
 
     int edge[][];
@@ -39,19 +28,15 @@ public class Graph {
             }
         }
         this.root = root;
-        //edge=new ArrayList[20];
         vertices = new Vertex[20];
         int i;
         for (i = 0; i < n + 1; i++) {
             vertices[i] = new Vertex(i);
-            //edge[i]=new ArrayList<Vertex>();
 
         }
     }
 
     void addEdge(int src, int dest) {
-        //Vertex v=vertices[dest];
-        //edge[src].add(v);
         edge[src][dest] = 1;
     }
 
@@ -109,16 +94,12 @@ public class Graph {
             while(true){
                 ArrayList<Integer> list_0=new ArrayList();
                 ArrayList<Integer> list_1=new ArrayList();
-               // System.out.println("vSet is "+vSet);
                 vSet=generateChain(prevDom,list_0,list_1,vSet,iDom,edge,index_0,index_1);
                 if(vSet==null){
                     vSet=new ArrayList();
                     vSet.add(iDom);
                     break;
                 }
-               // System.out.println("index 0 is "+index_0);
-                //System.out.println("index 1 is "+index_0);
-                //System.out.println("list zero is "+list_0);
                 chain_0.add(list_0);
                 chain_1.add(list_1);
                 index_0+=list_0.size();
@@ -131,13 +112,6 @@ public class Graph {
         }
         System.out.println("Chain zero is "+chain_0);
         System.out.println("Chain one is "+chain_1);
-        
-        
-        
-        
-        
-        
-        
     
     }
     
@@ -148,7 +122,7 @@ public class Graph {
         for(int i=0;i<n;i++){
             System.out.print("Vertex "+i);
             System.out.print("\tFlag = "+vertices[i].flag);
-            System.out.print("\tindex = "+vertices[i].index);
+            System.out.print("\t\tindex = "+vertices[i].index);
             System.out.print("\tmin index = "+vertices[i].min_index);
             System.out.println("\tmax index = "+vertices[i].max_index);
             
@@ -183,7 +157,6 @@ public class Graph {
             vertices[cDom.get(0)].max_index=index_0;
             vertices[cDom.get(0)].flag=1;
             vertices[v].flag=0;
-           // System.out.println("Flag of "+v+" is "+vertices[v].flag);
             index_0++;
             index_1++;
             int zero_size=list_0.size();
@@ -196,7 +169,6 @@ public class Graph {
                 
                 Integer x=null;
                 int u=list_0.get(zero_count);
-                //System.out.println("In zero with u as "+u);
                 int a[][]=new int[20][20];
                 for(int i=0;i<n;i++){
                     for(int j=0;j<n;j++){
@@ -208,13 +180,11 @@ public class Graph {
                 }
                 ArrayList<Integer> single=new ArrayList();
                 singleIDom(a,s,t,n,single);
-                //System.out.println("Single "+single);
                 single.remove((Integer)t);
                 Iterator itr=single.iterator();
                 while(itr.hasNext()){
                   x=(Integer)itr.next();
                   if(!list_1.contains(x)){
-                 //     System.out.println("Flag of "+v+" is "+vertices[v].flag);
                       
                     list_1.add(x);
                     vertices[x].min_index=vertices[u].index;
@@ -235,7 +205,6 @@ public class Graph {
                 
                 vertices[u].min_index=vertices[x].index-single.size()+1;
                 vertices[u].max_index=vertices[x].index;
-               // System.out.println("Min index of "+v+" is "+vertices[u].min_index);
                 
                 zero_count++;
                 }
@@ -244,7 +213,6 @@ public class Graph {
                 
                 Integer x=null;
                 int u=list_1.get(one_count);
-                //System.out.println("In one with u as "+u);
                 int a[][]=new int[20][20];
                 for(int i=0;i<n;i++){
                     for(int j=0;j<n;j++){
@@ -279,17 +247,13 @@ public class Graph {
                 
                 vertices[u].min_index=vertices[x].index-single.size()+1;
                 vertices[u].max_index=vertices[x].index;
-               // System.out.println("Min index of "+v+" is "+vertices[u].min_index);
                 one_count++; 
                 }
                 zero_size=list_0.size();
                 one_size=list_1.size();
             }
-           //System.out.println("Zero count is "+zero_count);
         }
         
-        //System.out.println("The list zero is "+list_0);
-        //System.out.println("The list one is "+list_1);
         vSet=new ArrayList();
         if(list_0.isEmpty())
             return null;
@@ -304,8 +268,6 @@ public class Graph {
     
 
     void singleIDom(int e[][], int s,int t,int len,ArrayList<Integer> singleDominators) {
-       // int s = src.vertex_no;
-        
 
         // Create a residual graph and fill the residual graph with
         // given capacities in the original graph as residual capacities
@@ -324,16 +286,12 @@ public class Graph {
         ArrayList<Integer> path = new ArrayList();
         
         int flag=bfs(rGraph, s, t, parent,len);
-        //for(int i=0;i<len;i++)
-          // System.out.println("parent[i] is "+parent[i]);
-        // Find minimum residual capacity of the edhes along the
-        // path filled by BFS. Or we can say find the maximum flow
-        // through the path found.
-        // int path_flow = Integer.MAX_VALUE;
+        /* Find minimum residual capacity of the edhes along the
+         path filled by BFS. Or we can say find the maximum flow
+         through the path found. */
         if(flag!=0){
         for (int v = t; v != s; v = parent[v]) {
             int u = parent[v];
-            //System.out.println("Path is "+path);
             if (u != s ) {
                 path.add(u);
             
@@ -341,9 +299,6 @@ public class Graph {
             
         }
         
-        
-        
-        //ArrayList<Integer> singleDominators = new ArrayList();
         Collections.reverse(path);
         Iterator itr = path.iterator();
 
@@ -445,7 +400,6 @@ public class Graph {
     Integer doubleIDom(ArrayList<Integer> vSet, int e[][], int sink,ArrayList<Integer> singleDom) {
         
         Integer v=null;
-        //ArrayList<Integer> singleDom=null;
         int a[][] = new int[20][20];
         doubleDomHelper(vSet, e, a);
         int src = n;// 13 combines 6 and 7
@@ -454,18 +408,14 @@ public class Graph {
         int parent[] = new int[20];
         
         bfs(a, src, sink, parent,alen);
-        //for(int i=0;i<alen;i++)
-          //  System.out.println("parent of "+i+" is "+parent[i]);
         ArrayList<Integer> path = new ArrayList();
         
         for (int w = sink; w != src; w = parent[w]) {
-          //  System.out.println("In loop "+w);
             int u = parent[w];
             if (u != src) {
                 path.add(u);
             }
             
-            // path_flow = Integer.min(path_flow, rGraph[u][v]);
         }
         Collections.reverse(path);
         Iterator itr = path.iterator();
@@ -485,7 +435,6 @@ public class Graph {
                 break;
         }
         if(v!=null){
-      //  System.out.println("The double vertex dominators are " + v + " and " + singleDom);
         
         return v;
         }
